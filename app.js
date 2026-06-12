@@ -1,5 +1,5 @@
 const API_URL =
-"https://flotillas-backend.onrender.com";
+"https://flotillas-backend.onrender.com/vehiculos";
 
 async function obtenerVehiculos(){
 
