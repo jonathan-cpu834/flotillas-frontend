@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Gestión de Flotillas</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f9;
+padding:20px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+}
+
+input,select,button{
+width:100%;
+padding:10px;
+margin:5px 0;
+box-sizing:border-box;
+}
+
+button{
+background:#0066cc;
+color:white;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+}
+
+th{
+background:#0066cc;
+color:white;
+}
+
+.operativo{
+color:green;
+font-weight:bold;
+}
+
+.mantenimiento{
+color:orange;
+font-weight:bold;
+}
+
+.fuera{
+color:red;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚛 Sistema de Gestión de Flotillas</h1>
+
+<div class="card">
+
+<h2>Registrar Vehículo</h2>
+
+<form id="formVehiculo">
+
+<input
+type="text"
+id="unidad"
+placeholder="Unidad"
+required>
+
+<input
+type="text"
+id="placas"
+placeholder="Placas"
+required>
+
+<input
+type="number"
+id="kilometraje"
+placeholder="Kilometraje"
+required>
+
+<input
+type="date"
+id="ultimoServicio"
+required>
+
+<input
+type="date"
+id="proximoServicio"
+required>
+
+<input
+type="text"
+id="responsable"
+placeholder="Responsable"
+required>
+
+<select id="estado">
+
+<option>Operativo</option>
+
+<option>En mantenimiento</option>
+
+<option>Fuera de servicio</option>
+
+</select>
+
+<button type="submit">
+Registrar Vehículo
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Vehículos Registrados</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Unidad</th>
+<th>Placas</th>
+<th>Kilometraje</th>
+<th>Último Servicio</th>
+<th>Próximo Servicio</th>
+<th>Estado</th>
+<th>Responsable</th>
+</tr>
+
+</thead>
+
+<tbody id="tabla"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
