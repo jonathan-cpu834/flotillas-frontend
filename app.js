@@ -1,6 +1,8 @@
 const API_URL =
 "https://flotillas-backend.onrender.com/vehiculos";
 
+let editandoId = null;
+
 async function obtenerVehiculos(){
 
 try{
@@ -52,6 +54,21 @@ ${v.estado}
 
 <td>${v.responsable}</td>
 
+<td>
+
+<button
+onclick="editarVehiculo('${v._id}')">
+Editar
+</button>
+
+<button
+style="background:red"
+onclick="eliminarVehiculo('${v._id}')">
+Eliminar
+</button>
+
+</td>
+
 </tr>
 `;
 
@@ -65,13 +82,76 @@ console.error(error);
 
 }
 
+async function editarVehiculo(id){
+
+const res =
+await fetch(API_URL);
+
+const datos =
+await res.json();
+
+const vehiculo =
+datos.find(v => v._id === id);
+
+if(!vehiculo) return;
+
+editandoId = id;
+
+document.getElementById("unidad").value =
+vehiculo.unidad;
+
+document.getElementById("placas").value =
+vehiculo.placas;
+
+document.getElementById("kilometraje").value =
+vehiculo.kilometraje;
+
+document.getElementById("ultimoServicio").value =
+vehiculo.ultimoServicio;
+
+document.getElementById("proximoServicio").value =
+vehiculo.proximoServicio;
+
+document.getElementById("estado").value =
+vehiculo.estado;
+
+document.getElementById("responsable").value =
+vehiculo.responsable;
+
+document.querySelector(
+"#formVehiculo button"
+).innerText = "Actualizar Vehículo";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+async function eliminarVehiculo(id){
+
+if(!confirm("¿Eliminar vehículo?"))
+return;
+
+await fetch(
+API_URL + "/" + id,
+{
+method:"DELETE"
+}
+);
+
+obtenerVehiculos();
+
+}
+
 document
 .getElementById("formVehiculo")
 .addEventListener("submit", async(e)=>{
 
 e.preventDefault();
 
-const nuevoVehiculo = {
+const vehiculo = {
 
 unidad:
 document.getElementById("unidad").value,
@@ -100,6 +180,27 @@ document.getElementById("responsable").value
 
 try{
 
+if(editandoId){
+
+await fetch(
+API_URL + "/" + editandoId,
+{
+method:"PUT",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(vehiculo)
+}
+);
+
+editandoId = null;
+
+document.querySelector(
+"#formVehiculo button"
+).innerText = "Registrar Vehículo";
+
+}else{
+
 await fetch(API_URL,{
 
 method:"POST",
@@ -108,11 +209,11 @@ headers:{
 "Content-Type":"application/json"
 },
 
-body:JSON.stringify(nuevoVehiculo)
+body:JSON.stringify(vehiculo)
 
 });
 
-alert("Vehículo registrado");
+}
 
 document
 .getElementById("formVehiculo")
